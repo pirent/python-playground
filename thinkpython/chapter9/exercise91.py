@@ -12,7 +12,8 @@ def dothing_with_word_that_satisfy(condition_check, **kwargs):
     if condition_check(**kwargs):
       print(word, end=' ')
       hit = hit + 1
-  print('\nStatistic: {}/{} = {:.6f} %'.format(hit, total, hit/total))
+  print('\nHit: {:n}'.format(hit))
+  print('Statistic: {}/{} = {:.6f} %'.format(hit, total, hit/total))
 
 if __name__ == "__main__":
   print('Words that have more than 20 characters')

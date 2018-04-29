@@ -8,8 +8,8 @@ from exercise91 import dothing_with_word_that_satisfy
  that don't contain any of them
 """
 def avoid(word, forbidden_letters):
-  for letter in forbidden_letters:
-    if word.count(letter) > 0:
+  for letter in word:
+    if letter in forbidden_letters:
       return False
   return True
 
