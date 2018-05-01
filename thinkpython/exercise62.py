@@ -1,3 +1,5 @@
+import time
+
 def ack(m, n):
   space=(' '*(m+n))
 #  print(space, 'ack with {:d} {:d}'.format(m, n))
@@ -16,6 +18,9 @@ def ack(m, n):
 #    print(space, 'returning', result)
     return result
 
-m = int(input('Input for m: '))
-n = int(input('Input for n: '))
-print('Ackerman result is:', ack(m, n))
+if __name__ == "__main__":
+  m = int(input('Input for m: '))
+  n = int(input('Input for n: '))
+  start = time.time()
+  print('Ackerman result is:', ack(m, n))
+  print('Ackerman without cache takes', time.time() - start)

@@ -54,17 +54,14 @@ def rotate_word_v2(word, n):
 # MAIN
 # =======================================================
 
-expected = 'jolly'
-actual = rotate_word_v1('cheer', 7)
-print('actual is {}'.format(actual))
-print('expected == actual? {}'.format(expected == actual))
+if __name__ == "__main__":
+  expected = 'jolly'
+  actual = rotate_word_v1('cheer', 7)
+  print('actual is {}'.format(actual))
+  print('expected == actual? {}'.format(expected == actual))
 
-algorithm = rotate_word_v2
+  algorithm = rotate_word_v2
 
-text = input('Enter input: ')
-shift = int(input('Enter shift: '))
-print('Result is {}', algorithm(text, shift))
-  
-    
-    
-    
+  text = input('Enter input: ')
+  shift = int(input('Enter shift: '))
+  print('Result is {}', algorithm(text, shift))
