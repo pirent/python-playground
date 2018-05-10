@@ -1,10 +1,10 @@
+from utils import build_histogram
+
 """
   takes a string and prints the letters in decreasing order of frequency
 """
 def most_frequent(s):
-  histogram = {}
-  for letter in s:
-    histogram[letter] = histogram.get(letter, 0) + 1
+  histogram = build_histogram(s)
   
   #print("> debug: histogram is", histogram)
   res = []
