@@ -2,7 +2,7 @@ import string
 import random
 
 to_be_replaced_letter_list = string.whitespace + string.punctuation
-
+prefix = ()
 
 def build_markov_analysis_from_file(filename, prefix_length=2):
   res = {}
@@ -31,19 +31,27 @@ def process_line(line, mapping, prefix_length=2):
   #print(">> DEBUG: line = {}".format(line))
   #print(">> DEBUG: processed_words = {}".format(processed_words))
   
-  for i in range(len(processed_words) - prefix_length):
-    prefix = " ".join(processed_words[i:i + prefix_length])
-    suffix = processed_words[i + prefix_length]
+  for word in processed_words:
+    global prefix
+    if len(prefix) < prefix_length:
+      prefix += (word,)
+      continue
+   
     suffixes = mapping.setdefault(prefix, [])
-    suffixes.append(suffix)
+    suffixes.append(word)
+  	
+    prefix = shift(prefix, word)
     
     #print(">> DEBUG: prefix = {}, suffix = {}, suffixes after adding = {}".format(prefix, suffix, suffixes))
 
-def build_randomly_text(mapping, txt_length=10):
+def shift(prefix, word):
+  return prefix[1:] + (word,)
+
+def build_randomly_text(mapping, txt_length=20):
   res = []
   prefixes = list(mapping.keys())
   random_prefix = random.choice(prefixes)
-  res.append(random_prefix)
+  #res.append(random_prefix)
 
   suffixes = mapping[random_prefix]
   random_suffix = random.choice(suffixes)
@@ -55,7 +63,7 @@ def build_randomly_text(mapping, txt_length=10):
   previous_suffix = random_suffix
   for i in range(txt_length):
     # build next prefix
-    prefix = previous_prefix.split(' ', 1)[1] + " " + previous_suffix
+    prefix = shift(previous_prefix, previous_suffix)
     suffixes = mapping.get(prefix)
     if not suffixes:
       break
