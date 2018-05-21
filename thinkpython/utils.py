@@ -18,3 +18,7 @@ def sumall(collection):
   for item in collection:
     total += item
   return total
+
+def print_attributes(obj):
+  for attr in vars(obj):
+    print(attr, getattr(obj, attr))
