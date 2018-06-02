@@ -22,3 +22,11 @@ def sumall(collection):
 def print_attributes(obj):
   for attr in vars(obj):
     print(attr, getattr(obj, attr))
+
+def find_defining_class(obj, method_name):
+  """Takes an object, and a method name, then returns the class
+  provides the definition of the method
+  """
+  for ty in type(obj).mro():
+    if method_name in ty.__dict__:
+      return ty

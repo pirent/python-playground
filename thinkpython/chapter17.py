@@ -44,6 +44,11 @@ class Time:
   def __radd__(self, other):
     return self.__add__(other)
 
+  def __lt__(self, other):
+    t1 = self.hour, self.minute, self.second
+    t2 = other.hour, other.minute, other.second
+    return t1 < t2
+
 class Point:
   def __init__(self, x=0, y=0):
     self.x = x
@@ -65,10 +70,7 @@ def int_to_time(seconds):
   return time
 
 if __name__ == "__main__":
-  start = Time()
-  start.hour = 9
-  start.minute = 45
-  start.second = 00
+  start = Time(9, 45, 0)
   start.print_time()
 
   end = start.increment(1337)
@@ -89,3 +91,5 @@ if __name__ == "__main__":
   print(start + duration)
   print(start + 1337)
   print(1337 + start)
+
+  print("Is start lesser than end?", start < end)
