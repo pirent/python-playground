@@ -8,10 +8,8 @@ class Kangaroo:
         name: string
         contents: initial pouch contents
         """
-        if contents is None:
-            contents = []
         self.name = name
-        self.pouch_contents = contents
+        self.pouch_contents = [] if contents == None else contents
 
     def put_in_pouch(self, item):
         """Adds a new item to pouch contents

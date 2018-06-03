@@ -13,6 +13,8 @@ from __future__ import print_function, division
 
 from chapter18 import Card, Hand, Deck
 
+from collections import defaultdict
+
 class Hist(dict):
   def __init__(self, seq=[]):
     for x in seq:
@@ -93,9 +95,9 @@ class PokerHand(Hand):
     return False
 
   def has_straight_flush(self):
-    sub_hands = {}
+    sub_hands = defaultdict(PokerHand)
     for c in self.cards:
-      sub_hands.setdefault(c.suit, PokerHand()).add_card(c)
+      sub_hands[c.suit].add_card(c)
 
     for hand in sub_hands.values():
       if len(hand.cards) < 5:

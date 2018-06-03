@@ -1,3 +1,4 @@
+from collections import Counter
 import time
 
 """
@@ -55,17 +56,7 @@ def is_sorted(t):
   Take two strings and return True if they are anagram
 """
 def is_anagram(s1, s2):
-  t1 = list(s1)
-  t2 = list(s2)
-  if len(t1) != len(t2):
-    return False
-  for letter in t1:
-    t2.remove(letter)
-
-  if not t2: #t2 is empty
-    return True
-  else:
-    return False
+  return Counter(s1) == Counter(s2)
 
 """
   Exercise 10-7:
@@ -73,11 +64,7 @@ def is_anagram(s1, s2):
   should not modify the original list
 """
 def has_duplicated(t):
-  for i in range(len(t)):
-    element = t[i]
-    if element in t[i + 1:]:
-      return True
-  return False
+  return len(set(t)) < len(t)
 
 """
   Exercise 10-9:

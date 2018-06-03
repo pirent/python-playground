@@ -3,10 +3,7 @@
   Example: word='Hoe alfalfa', letters='acefhlo'
 """
 def uses_only(word, letters):
-  for letter in word:
-    if not letter in letters and letter.isalpha():
-      return False
-  return True
+  return set(word) <= set(letters)
 
 if __name__ == "__main__":
   word = input("Enter word: ")

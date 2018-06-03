@@ -8,10 +8,10 @@ from exercise91 import dothing_with_word_that_satisfy
  that don't contain any of them
 """
 def avoid(word, forbidden_letters):
-  for letter in word:
-    if letter in forbidden_letters:
-      return False
-  return True
+  # using any expression
+  #return not any(letter in forbidden_letters for letter in word)
+  # using set operation
+  return not set(word).intersection(set(forbidden_letters))
 
 if __name__ == "__main__":
   print('Smoke test')
