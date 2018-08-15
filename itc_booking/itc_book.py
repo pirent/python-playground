@@ -1,6 +1,8 @@
 #!/usr/bin/python3
-import logging, re, os
+import logging, re, os, getpass, base64
 import itc_mapping, account
+
+from string import Template
 
 logging.basicConfig(level=logging.DEBUG, format=' %(asctime)s - %(levelname)s - %(message)s')
 logging.info('Start booking ITC')
@@ -20,10 +22,16 @@ ENTRY_PATTERN = re.compile(r"""^
   $""", re.VERBOSE)
 
 date = None
+valuesDict = {'loginId': None, 'ticketRid': "", 'comment': "", 'startTime': None, 'endTime': None, 'date': None}
 
-# TODO: take account and password number
+def promptUserCredential():
+  loginId = input('Enter your loginId: ')
+  passwd = getpass.getpass('Enter your password: ')
+  credential = loginId + ":" + passwd
+  credential = base64.b64encode(credential.encode()).decode()
 
-# TODO: find out how to use ITC token 
+  logging.debug("base 64 credential: " + credential)
+  return credential
 
 def parseEntry(mo):
   startTime = mo.group(1) + ':' + mo.group(2)
@@ -34,7 +42,16 @@ def parseEntry(mo):
   logging.debug('Entry: ' + str(result))
   return result
 
+def preparePayload(templateFile, valuesDict):
+  with open(templateFile) as fin:
+    src = Template(fin.read())
+    payload = src.substitude(valuesDict)
+    return payload
+  
+
 def bookItc():
+  credential = promptUserCredential()
+
   with open('itc_log') as logfile:
     for line in logfile:
       line = line.strip()
@@ -55,6 +72,12 @@ def bookItc():
         workType, tag = itc_mapping.tag_mapping.get(key)
         logging.debug('Type of work is ' + str(workType))
         logging.debug('Tag is ' + str(tag))
+        
+	# TODO: base on workType and tag, determine the correct template file
+
+        # TODO: construct the dictionary
+
+        # TODO: forming the payload based on template and dictionary
 
         # TODO: sending REST request
 
