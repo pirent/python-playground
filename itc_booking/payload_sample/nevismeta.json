@@ -24,7 +24,7 @@
     "reduceTargetTimeFlag": true,
     "itcActivityClass": 1
   },
-  "ticketRid": "ticketRid",
+  "ticketRid": "$ticketRid",
   "itcTag": "NEVIS/Auth/Meta/Maint - 20395",
   "comment": "$comment",
   "startTime": "$startTime",
