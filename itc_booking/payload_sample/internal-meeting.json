@@ -9,7 +9,7 @@
   "isClosedJiraTicket": false,
   "isActivityChosen": false,
   "id": null,
-  "employeeLogin": "vhphuc",
+  "employeeLogin": "$loginId",
   "activity": {
     "activityCode": 1010,
     "activityAcd": "Internal meeting",
@@ -26,12 +26,12 @@
   },
   "ticketRid": "",
   "itcTag": "NEVIS/Auth/Meta/Maint - 20395",
-  "comment": "daily standup",
-  "startTime": "10:15",
-  "endTime": "10:20",
+  "comment": "$comment",
+  "startTime": "$startTime",
+  "endTime": "$endTime",
   "enterInZimbra": false,
   "eligibleForExtraPay": false,
   "editable": true,
   "addToFavouritesFlag": true,
-  "bookingDate": "2018-08-15"
+  "bookingDate": "$date"
 }

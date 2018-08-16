@@ -9,7 +9,7 @@
   "isClosedJiraTicket": false,
   "isActivityChosen": false,
   "id": null,
-  "employeeLogin": "vhphuc",
+  "employeeLogin": "$loginId",
   "activity": {
     "activityCode": 1600,
     "activityAcd": "various",
@@ -27,11 +27,11 @@
   "ticketRid": "",
   "itcTag": "",
   "comment": "test",
-  "startTime": "09:00",
-  "endTime": "10:00",
+  "startTime": "$startTime",
+  "endTime": "$endTime",
   "enterInZimbra": false,
   "eligibleForExtraPay": false,
   "ticketSummary": null,
   "addToFavouritesFlag": false,
-  "bookingDate": "2018-08-13"
+  "bookingDate": "$date"
 }

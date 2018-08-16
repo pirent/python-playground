@@ -9,7 +9,7 @@
   "isClosedJiraTicket": false,
   "isActivityChosen": false,
   "id": null,
-  "employeeLogin": "vhphuc",
+  "employeeLogin": "$loginId",
   "activity": {
     "activityCode": 1000,
     "activityAcd": "Work",
@@ -24,14 +24,14 @@
     "reduceTargetTimeFlag": true,
     "itcActivityClass": 1
   },
-  "ticketRid": "NEVISMETA-430",
+  "ticketRid": "ticketRid",
   "itcTag": "NEVIS/Auth/Meta/Maint - 20395",
-  "comment": "learning jaxrs, jaxb",
-  "startTime": "10:00",
-  "endTime": "10:15",
+  "comment": "$comment",
+  "startTime": "$startTime",
+  "endTime": "$endTime",
   "enterInZimbra": false,
   "eligibleForExtraPay": false,
-  "ticketSummary": "Replace JAXB/Moxy with Jackson in REST interface",
+  "ticketSummary": "",
   "addToFavouritesFlag": false,
-  "bookingDate": "2018-08-15"
+  "bookingDate": "$date"
 }
