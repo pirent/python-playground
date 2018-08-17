@@ -4,7 +4,7 @@ import itc_mapping, account
 
 from string import Template
 
-loglevel = 'DEBUG'
+loglevel = logging.INFO
 logging.basicConfig(format='%(levelname)s:%(message)s', level=loglevel, filename='app.log')
 
 DATE_PATTERN = re.compile(r"""^(
@@ -53,8 +53,13 @@ def parseEntry(mo):
   valuesDict['comment'] = comment
 
   mo = TICKET_PATTERN.search(activity)
-  valuesDict['ticketRid'] = mo.group(0).upper() if mo else ''
-  
+  if mo:
+    valuesDict['ticketRid'] = mo.group(0).upper()
+    valuesDict['comment'] = comment
+  else:
+    valuesDict['ticketRid'] = ''
+    valuesDict['comment'] = activity + " - " + comment if comment else activity
+
   logging.debug('After parsing: %s', str(valuesDict))
   return activity
 
