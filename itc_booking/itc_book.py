@@ -4,7 +4,7 @@ import itc_mapping, account
 
 from string import Template
 
-loglevel = 'INFO'
+loglevel = 'DEBUG'
 logging.basicConfig(format='%(levelname)s:%(message)s', level=loglevel, filename='app.log')
 
 DATE_PATTERN = re.compile(r"""^(
@@ -23,8 +23,9 @@ ENTRY_PATTERN = re.compile(r"""^
 TICKET_PATTERN = re.compile(r'^\w+?-\d+?$')
 
 TEMPLATE_DIR = 'payload_sample/'
+PAYLOAD_FILE = 'payload_temp.json'
 
-ITC_URL='http://FIXME'
+ITC_URL='https://aww.adnovum.ch/itc/api/v3/bookings'
 
 date = None
 valuesDict = {'loginId': None, 'ticketRid': "", 'comment': "", 'startTime': None, 'endTime': None, 'date': None}
@@ -57,21 +58,28 @@ def parseEntry(mo):
   logging.debug('After parsing: %s', str(valuesDict))
   return activity
 
-def preparePayload(templateFile, values):
-  with open(templateFile) as fin:
-    src = Template(fin.read())
-    payload = src.substitute(values)
-    return payload
-
 def pickTemplate(ticket):
   key = 'nevismeta' if ticket.lower().startswith('nevismeta') else ticket
   return TEMPLATE_DIR + itc_mapping.template_mapping.get(key)
 
-def sendRequest(payload, credential, entry):
-  headers = {'Authorization' : credential, 'Accept' : 'application/json', 'Content-Type' : 'application/json'}
-  resp = requests.post(ITC_URL, data=json.dumps(payload), headers=headers)
+def preparePayload(templateFile, values):
+  payload = None
+
+  with open(templateFile) as fin:
+    src = Template(fin.read())
+    payload = src.substitute(values)
+    logging.debug('Payload is %s', payload)
+  with open(PAYLOAD_FILE, 'w') as fin:
+    fin.write(payload)
+
+  return
+
+def sendRequest(credential, entry):
+  authzHeader = 'Basic ' + credential
+  headers = {'Authorization' : authzHeader, 'Accept' : 'application/json', 'Content-Type' : 'application/json', 'Cache-Control' : 'no-cache'}
+  resp = requests.post(ITC_URL, data=open(PAYLOAD_FILE, 'rb'), headers=headers)
   logging.debug("Response: %s %s", resp.status_code, resp.text)
-  if resp.status_code == 201:
+  if resp.status_code == 200:
     logging.info('Successful book entry: %s', entry)
   else:
     logging.error('Wasted: %s', entry)
@@ -97,13 +105,12 @@ def bookItc():
       mo = ENTRY_PATTERN.search(line)
       if mo:
         activity = parseEntry(mo);
+
         templateFile = pickTemplate(activity)
-        payload = preparePayload(templateFile, valuesDict) 
+        
+        preparePayload(templateFile, valuesDict) 
 
-        # TODO: sending REST request
-        logging.debug('Sending payload of %s', payload)
-        sendRequest(payload, credential, line)
-
+        sendRequest(credential, line)
       else:
         logging.error('Skipping entry: %s', line)
     
