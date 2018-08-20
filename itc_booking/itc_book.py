@@ -1,6 +1,6 @@
 import logging, re, os, getpass, base64, datetime
 import requests, json
-import itc_mapping, account
+import itc_mapping
 
 from string import Template
 
@@ -25,7 +25,7 @@ TICKET_PATTERN = re.compile(r'^\w+?-\d+?$')
 TEMPLATE_DIR = 'payload_sample/'
 PAYLOAD_FILE = 'payload_temp.json'
 
-ITC_URL='https://aww.adnovum.ch/itc/api/v3/bookings'
+ITC_URL='http://abc-booking.com'
 
 date = None
 valuesDict = {'loginId': None, 'ticketRid': "", 'comment': "", 'startTime': None, 'endTime': None, 'date': None}
